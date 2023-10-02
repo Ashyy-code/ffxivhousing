@@ -7,10 +7,19 @@
    --type-bg:#817972;
    --type-button-sep:#6c6157;
    --type-button-hv:#333333; 
+
+   --item-bg:#484941;
+   --item-bg-hv:#585a49;
+   --item-brd:#efefef;
+   --item-brd-hv:#d5d8c2;
+
+   --img-brd:#a6a898;
 }
 
 /*Body Main*/
 body,html,#app{
     margin:0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background:#2c2c2c;
+    overflow: hidden;
 }

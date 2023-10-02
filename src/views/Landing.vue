@@ -10,15 +10,16 @@
   </div>
 
 
-  <div v-if="this.$store.state.endpointDataLoaded">
+  <div class="housing-items" v-if="this.$store.state.endpointDataLoaded">
     <div 
     v-for="housingItem in this.$store.state.housingItemsDataFiltered" 
     :key="housingItem.itemID" 
     class="housing-item"
     @click="this.$router.push('/view/' + housingItem.itemID)"
     >
-      <img :src="'https://en.ff14housing.com' + housingItem.itemIconImage.substring(1,housingItem.itemIconImage.length)" />
-      {{ housingItem.itemName }}
+      <img v-if="housingItem.itemImage1" :src="'https://en.ff14housing.com' + housingItem.itemImage1?.substring(1,500)" />
+      <img v-if="!housingItem.itemImage1" :src="'https://en.ff14housing.com' + housingItem.itemIconImage?.substring(1,500)" />
+      <span>{{ housingItem.itemName }}</span>
     </div>
   </div>
 
@@ -65,6 +66,8 @@ export default {
 
   .item-types{
     background:var(--type-bg);
+    width:min-content;
+    white-space: nowrap;
 
     .item-type{
       padding:1rem;
@@ -89,11 +92,48 @@ export default {
     }
   }
 }
+
+.housing-items{
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem;
+  padding:1rem;
+  height:calc(100vh - 2rem);
+  overflow-y:scroll;
+  align-content: start;
+
+}
 .housing-item{
   cursor: pointer;
+  width:250px;
+  padding:1rem;
+  border-radius: .5rem;
+  background:var(--item-bg);
+  //border:solid 5px var(--item-brd);
+  flex-grow: 1;
+  display:flex;
+  flex-direction: column;
+  color:white;
+  max-height:350px;
+  transition:all 300ms ease;
+
+
+  span{
+    text-align: center;
+    padding:.5rem;
+    font-size:120%;
+  }
+
+  img{
+    border-radius: .5rem;
+    max-height:300px;
+    object-fit: cover;
+   // border:solid 5px var(--img-brd)
+  }
 
   &:hover{
-    background:#efefef;
+    //border:solid 5px var(--item-brd-hv);
+    background:var(--item-bg-hv);
   }
 }
 </style>

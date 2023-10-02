@@ -15,7 +15,7 @@ export default {
                 response =>{
                     //load the housing data
                     store.state.housingItemsData = response.data;
-                    store.state.housingItemsDataFiltered = response.data;
+                    store.state.housingItemsDataFiltered = response.data.slice(0,10);
 
 
                     //manage the data
