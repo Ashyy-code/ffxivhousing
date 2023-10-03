@@ -3,7 +3,12 @@
     <typeSearcher />
     <div v-if="housingItem" class="view-item animate__animated animate__fadeIn">
       <div class="panel">
-        <button @click="this.$store.state.pushedFromView = true; this.$router.push('/')">
+        <button
+          @click="
+            this.$store.state.pushedFromView = true;
+            this.$router.push('/');
+          "
+        >
           <i class="las la-chevron-left"></i><span>Back to items</span>
         </button>
       </div>
@@ -12,27 +17,40 @@
         <div v-if="housingItem.itemImage1" class="image1">
           <div v-if="!imageOneLoaded" class="loader">
             <div class="loaditem e">
-              <img src="../assets/delivery_moogle.png" class="animate__animated animate__pulse animate__infinite" />
-            <span>Loading Image..</span>
+              <img
+                src="../assets/delivery_moogle.png"
+                class="animate__animated animate__pulse animate__infinite"
+              />
+              <span>Loading Image..</span>
             </div>
-
           </div>
           <img
             :src="
               'https://en.ff14housing.com' +
               housingItem.itemImage1?.substring(1, 500)
             "
-             @load="imageOneLoaded = true"
-             v-show="imageOneLoaded &! housingItem.itemImage1.includes('lodestone.png')"
-             class="animate__animated animate__fadeIn"
+            @load="imageOneLoaded = true"
+            v-show="
+              imageOneLoaded & !housingItem.itemImage1.includes('lodestone.png')
+            "
+            class="animate__animated animate__fadeIn"
           />
-          <img src="../assets/no-image.png" v-if="housingItem.itemImage1.includes('lodestone.png')" />
+          <img src="../assets/no-image.png" v-if="showErrorImg(1)" />
+          <img src="../assets/no-image2.png" v-if="showErrorImg(2)" />
+          <img src="../assets/no-image3.png" v-if="showErrorImg(3)" />
+          <img src="../assets/no-image4.png" v-if="showErrorImg(4)" />
+          <img src="../assets/no-image5.png" v-if="showErrorImg(5)" />
+          <img src="../assets/no-image6.png" v-if="showErrorImg(6)" />
+          <img src="../assets/no-image7.png" v-if="showErrorImg(7)" />
         </div>
         <div v-if="housingItem.itemImage2" class="image1">
           <div v-if="!imageTwoLoaded" class="loader">
             <div class="loaditem">
-              <img src="../assets/delivery_moogle.png" class="animate__animated animate__pulse animate__infinite"  />
-            <span>Loading Image..</span>
+              <img
+                src="../assets/delivery_moogle.png"
+                class="animate__animated animate__pulse animate__infinite"
+              />
+              <span>Loading Image..</span>
             </div>
           </div>
           <img
@@ -94,7 +112,12 @@
 
       <div v-if="housingItem.source == 'crafting'" class="item-source panel">
         <div class="title">
-          <i class="las la-hammer"></i><span>Crafted by <b>{{ housingItem.craftedBy }}</b> ({{ housingItem.craftedByRequiredLevel }})</span>
+          <i class="las la-hammer"></i
+          ><span
+            >Crafted by <b>{{ housingItem.craftedBy }}</b> ({{
+              housingItem.craftedByRequiredLevel
+            }})</span
+          >
         </div>
         <table v-if="housingItem.craftItems">
           <thead>
@@ -118,10 +141,7 @@
               <td>Amount Required</td>
             </tr>
           </thead>
-          <tr
-            v-for="(craftingMat, index) in housingItem.crystals"
-            :key="index"
-          >
+          <tr v-for="(craftingMat, index) in housingItem.crystals" :key="index">
             <td>{{ craftingMat.itemName }}</td>
             <td>{{ craftingMat.ammountRequired }}</td>
           </tr>
@@ -129,11 +149,18 @@
       </div>
 
       <div v-if="housingItem.source == 'drop'" class="panel">
-        <div class="title"><i class="las la-cookie"></i><span>This item is a drop/store item</span></div>
-        <div class="info">Info on where this item drops is not available, but I can <a :href="googleTerm + housingItem.itemName" target="_blank">Google</a> it for you. </div>
+        <div class="title">
+          <i class="las la-cookie"></i
+          ><span>This item is a drop/store item</span>
+        </div>
+        <div class="info">
+          Info on where this item drops is not available, but I can
+          <a :href="googleTerm + housingItem.itemName" target="_blank"
+            >Google</a
+          >
+          it for you.
+        </div>
       </div>
-
-    
     </div>
   </div>
 </template>
@@ -144,6 +171,9 @@ import typeSearcher from "../components/typeSearcher.vue";
 export default {
   components: { typeSearcher },
   mounted() {
+    // generating a random number
+    this.chosenRandom = Math.floor(Math.random() * (this.maxNumber - this.minNumber + 1)) + this.minNumber;
+
     this.itemID = this.$route.params.id;
     //load this item
     this.$store.state.housingItemsData.forEach((housingItem) => {
@@ -156,39 +186,55 @@ export default {
     return {
       itemID: null,
       housingItem: null,
-      googleTerm:'https://www.google.com/search?q=ffxiv how to get  ',
-      imageOneLoaded:false,
-      imageTwoLoaded:false,
+      googleTerm: "https://www.google.com/search?q=ffxiv how to get  ",
+      imageOneLoaded: false,
+      imageTwoLoaded: false,
+      minNumber: 1,
+      maxNumber: 7,
+      chosenRandom: null,
     };
   },
-
+  methods: {
+    showErrorImg(imgNumber) {
+      if (this.housingItem.itemImage1.includes("lodestone.png")) {
+        if (this.chosenRandom == imgNumber) {
+          return true;
+        } else {
+          //onsole.log(imgNumber + ":" + a);
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.item-details{
+.item-details {
   display: flex;
-  gap:1rem;
-  .item-detail{
+  gap: 1rem;
+  .item-detail {
     display: flex;
     flex-direction: column;
-    gap:.25rem;
+    gap: 0.25rem;
 
-    span{
-      &[ttl]{
-        font-size:150%;
+    span {
+      &[ttl] {
+        font-size: 150%;
       }
-      &[sl]{
+      &[sl] {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
       }
-      &[dsc]{
-        padding:.5rem;
-        padding-left:0;
+      &[dsc] {
+        padding: 0.5rem;
+        padding-left: 0;
         font-style: italic;
-        color:#e4e9b5;
+        color: #e4e9b5;
       }
     }
   }
@@ -219,10 +265,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  width:100%;
+  width: 100%;
   overflow-y: auto;
-  background:url('https://ashypls.com/endpoints/files/fantasia/hibg.jpg');
-  background-size:cover;
+  background: url("https://ashypls.com/endpoints/files/fantasia/hibg.jpg");
+  background-size: cover;
 }
 
 .panel {
@@ -235,24 +281,24 @@ button {
     gap: 0.5rem;
     font-size: 150%;
     align-items: center;
-    padding:.5rem;
+    padding: 0.5rem;
   }
 
   table {
     width: 100%;
     tr {
-      background:#424137;
-      &:nth-child(even){
-        background:#2d2c25;
+      background: #424137;
+      &:nth-child(even) {
+        background: #2d2c25;
       }
     }
-    thead tr{
-      background:#675432;
+    thead tr {
+      background: #675432;
     }
-    thead td{
-      width:10%;
+    thead td {
+      width: 10%;
     }
-    td{
+    td {
       padding: 0.5rem;
     }
   }
@@ -263,40 +309,39 @@ button {
   flex-direction: row;
   justify-content: flex-start;
   gap: 1rem;
-  width:100%;
+  width: 100%;
 
-  .loader{
-    min-width:500px;
-    min-height:500px;
-    position:absolute;
-    top:0;
-    left:0;
+  .loader {
+    min-width: 500px;
+    min-height: 500px;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: grid;
     place-items: center;
 
-    .loaditem{
-      display:flex;
+    .loaditem {
+      display: flex;
       flex-direction: column;
-      gap:1rem;
+      gap: 1rem;
       justify-content: center;
       align-items: center;
       text-transform: uppercase;
 
-      span{
-        width:100%;
+      span {
+        width: 100%;
         text-align: center;
       }
     }
 
-    img{
-      width:200px;
+    img {
+      width: 200px;
     }
   }
 
-  .image1{
+  .image1 {
     position: relative;
-    width:50%;
-
+    width: 50%;
   }
 
   img {
