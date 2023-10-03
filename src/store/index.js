@@ -7,7 +7,8 @@ export default createStore({
             housingItemsData:null,
             housingItemsDataFiltered:null,
             housingItemTypes:[],
-            
+            selectedType:'Furnishing',
+            selectedSubType:'All',
         }
     }
 })
