@@ -23,9 +23,10 @@
               housingItem.itemImage1?.substring(1, 500)
             "
              @load="imageOneLoaded = true"
-             v-show="imageOneLoaded"
+             v-show="imageOneLoaded &! housingItem.itemImage1.includes('lodestone.png')"
              class="animate__animated animate__fadeIn"
           />
+          <img src="../assets/no-image.png" v-if="housingItem.itemImage1.includes('lodestone.png')" />
         </div>
         <div v-if="housingItem.itemImage2" class="image1">
           <div v-if="!imageTwoLoaded" class="loader">
@@ -155,7 +156,7 @@ export default {
     return {
       itemID: null,
       housingItem: null,
-      googleTerm:'https://www.google.com/search?q=',
+      googleTerm:'https://www.google.com/search?q=ffxiv how to get  ',
       imageOneLoaded:false,
       imageTwoLoaded:false,
     };
