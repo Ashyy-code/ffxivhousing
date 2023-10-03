@@ -3,26 +3,45 @@
     <typeSearcher />
     <div v-if="housingItem" class="view-item animate__animated animate__fadeIn">
       <div class="panel">
-        <button @click="this.$router.push('/')">
+        <button @click="this.$store.state.pushedFromView = true; this.$router.push('/')">
           <i class="las la-chevron-left"></i><span>Back to items</span>
         </button>
       </div>
 
       <div class="gallery panel">
         <div v-if="housingItem.itemImage1" class="image1">
+          <div v-if="!imageOneLoaded" class="loader">
+            <div class="loaditem e">
+              <img src="../assets/delivery_moogle.png" class="animate__animated animate__pulse animate__infinite" />
+            <span>Loading Image..</span>
+            </div>
+
+          </div>
           <img
             :src="
               'https://en.ff14housing.com' +
               housingItem.itemImage1?.substring(1, 500)
             "
+             @load="imageOneLoaded = true"
+             v-show="imageOneLoaded"
+             class="animate__animated animate__fadeIn"
           />
         </div>
         <div v-if="housingItem.itemImage2" class="image1">
+          <div v-if="!imageTwoLoaded" class="loader">
+            <div class="loaditem">
+              <img src="../assets/delivery_moogle.png" class="animate__animated animate__pulse animate__infinite"  />
+            <span>Loading Image..</span>
+            </div>
+          </div>
           <img
             :src="
               'https://en.ff14housing.com' +
               housingItem.itemImage2?.substring(1, 500)
             "
+            @load="imageTwoLoaded = true"
+            v-show="imageTwoLoaded"
+            class="animate__animated animate__fadeIn"
           />
         </div>
       </div>
@@ -137,8 +156,11 @@ export default {
       itemID: null,
       housingItem: null,
       googleTerm:'https://www.google.com/search?q=',
+      imageOneLoaded:false,
+      imageTwoLoaded:false,
     };
   },
+
 };
 </script>
 
@@ -198,12 +220,13 @@ button {
   gap: 1rem;
   width:100%;
   overflow-y: auto;
+  background:url('https://ashypls.com/endpoints/files/fantasia/hibg.jpg');
+  background-size:cover;
 }
 
 .panel {
-  background: #1e1c17;
+  background: var(--item-bg);
   padding: 1rem;
-  border-radius: 0.5rem;
   max-width: calc(1000px + 1rem);
 
   .title {
@@ -239,6 +262,41 @@ button {
   flex-direction: row;
   justify-content: flex-start;
   gap: 1rem;
+  width:100%;
+
+  .loader{
+    min-width:500px;
+    min-height:500px;
+    position:absolute;
+    top:0;
+    left:0;
+    display: grid;
+    place-items: center;
+
+    .loaditem{
+      display:flex;
+      flex-direction: column;
+      gap:1rem;
+      justify-content: center;
+      align-items: center;
+      text-transform: uppercase;
+
+      span{
+        width:100%;
+        text-align: center;
+      }
+    }
+
+    img{
+      width:200px;
+    }
+  }
+
+  .image1{
+    position: relative;
+    width:50%;
+
+  }
 
   img {
     width: 100%;

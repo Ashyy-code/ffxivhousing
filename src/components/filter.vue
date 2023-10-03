@@ -31,6 +31,7 @@ export default {
         }
       });
       this.subItems = arrSub;
+      this.$store.state.previousSubList = arrSub;
     },
 
     filterBySubItem(item) {
@@ -44,10 +45,18 @@ export default {
           this.$store.state.housingItemsDataFiltered.push(hItem);
         }
       });
+      //this.loadSubItems();
     }
   },
   mounted() {
-    this.loadSubItems();
+    if(!this.$store.state.pushedFromView == true){
+      this.loadSubItems();
+    } else{
+      this.$store.state.pushedFromView = false;
+      this.subItems = this.$store.state.previousSubList;
+      //this.$store.state.previousSubList = null;
+    }
+    
   },
   watch: {
     "$store.state.selectedType": function () {
@@ -79,8 +88,8 @@ export default {
   display: flex;
   gap: 0.75rem;
   padding: 1rem;
-  padding-bottom: 0;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .subitem {
   background: #4a4030;
@@ -89,6 +98,7 @@ export default {
   cursor: pointer;
   text-transform: uppercase;
   font-size: 80%;
+  transition:all 300ms ease;
 
   &:hover {
     background: #935f0b;

@@ -9,6 +9,8 @@ export default createStore({
             housingItemTypes:[],
             selectedType:'Furnishing',
             selectedSubType:'All',
+            pushedFromView:false,
+            previousSubList:null,
         }
     }
 })

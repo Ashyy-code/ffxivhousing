@@ -26,7 +26,6 @@
             'https://en.ff14housing.com' +
             housingItem.itemIconImage?.substring(1, 500)
           "
-          
         />
         <img
           v-if="!housingItem.itemImage1 && !housingItem.itemIconImage"
@@ -77,25 +76,29 @@ export default {
   display: flex;
   flex-direction: column;
   height:100vh;
+  width:100vw;
 }
 
 .housing-items {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
   padding: 1rem;
+  padding-top:0;
+  justify-content: center;
   flex-grow: 1;
+  width:calc(100% - 2rem);
   overflow-y: scroll;
   align-content: start;
+  background:url('https://ashypls.com/endpoints/files/fantasia/hibg.jpg');
+  background-size: cover;
 }
 .housing-item {
   cursor: pointer;
   width: 250px;
-  padding: 1rem;
-  border-radius: 0.5rem;
   background: var(--item-bg);
-  //border:solid 5px var(--item-brd);
-  flex-grow: 1;
+  border:solid 5px #131313;
+
   display: flex;
   flex-direction: column;
   color: white;
@@ -104,6 +107,8 @@ export default {
 
   span {
     text-align: center;
+    display: grid;
+    place-items:center;
     padding: 0.5rem;
     font-size: 130%;
     height: 65px;
@@ -111,8 +116,7 @@ export default {
     &[cr] {
       font-size: 110%;
       background: var(--craft-bg);
-      border-radius: 0.5rem;
-      padding: 0.25rem;
+      padding: 0.5rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -122,16 +126,15 @@ export default {
   }
 
   img {
-    border-radius: 0.5rem;
-    max-height: 300px;
-    max-width: calc(300px - 2rem);
+    width:100%;
+    max-width:300px;
     object-fit: cover;
     margin: auto;
     // border:solid 5px var(--img-brd)
   }
 
   &:hover {
-    //border:solid 5px var(--item-brd-hv);
+    border:solid 5px var(--item-brd-hv);
     background: var(--item-bg-hv);
   }
 }
