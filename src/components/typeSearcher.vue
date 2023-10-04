@@ -1,6 +1,9 @@
 <template>
   
   <div v-if="this.$store.state.endpointDataLoaded" class="item-types">
+    <div class="item-type src" @click="this.$router.push('/search'); this.$store.state.selectedType = null">
+      <label for=""><i class="las la-search"></i></label> Search
+    </div>
     <div 
     v-for="(type,index) in this.$store.state.housingItemTypes" 
     :key="index" 
@@ -108,5 +111,12 @@ export default {
         color:white;
       }
     }
+}
+.src{
+  background:#484941;
+  color:#bcc585 !important;
+  &:hover{
+    color:white !important;
+  }
 }
 </style>

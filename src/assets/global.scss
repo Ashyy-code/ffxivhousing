@@ -25,3 +25,37 @@ body,html,#app{
     background:#2c2c2c;
     overflow: hidden;
 }
+
+
+.panel {
+    background: var(--item-bg);
+    padding: 1rem;
+    max-width: calc(1000px + 1rem);
+  
+    .title {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 150%;
+      align-items: center;
+      padding: 0.5rem;
+    }
+  
+    table {
+      width: 100%;
+      tr {
+        background: #424137;
+        &:nth-child(even) {
+          background: #2d2c25;
+        }
+      }
+      thead tr {
+        background: #675432;
+      }
+      thead td {
+        width: 10%;
+      }
+      td {
+        padding: 0.5rem;
+      }
+    }
+  }

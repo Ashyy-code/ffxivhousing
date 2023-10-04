@@ -5,8 +5,7 @@
       <div class="panel">
         <button
           @click="
-            this.$store.state.pushedFromView = true;
-            this.$router.push('/');
+           goBack()
           "
         >
           <i class="las la-chevron-left"></i><span>Back to items</span>
@@ -207,6 +206,15 @@ export default {
         return false;
       }
     },
+    goBack(){
+      this.$store.state.pushedFromView = true;
+      if(this.$store.state.selectedType == null){
+        this.$router.push('/search');
+      } else{
+        this.$router.push('/');
+      }
+      
+    }
   },
 };
 </script>
@@ -271,38 +279,6 @@ button {
   background-size: cover;
 }
 
-.panel {
-  background: var(--item-bg);
-  padding: 1rem;
-  max-width: calc(1000px + 1rem);
-
-  .title {
-    display: flex;
-    gap: 0.5rem;
-    font-size: 150%;
-    align-items: center;
-    padding: 0.5rem;
-  }
-
-  table {
-    width: 100%;
-    tr {
-      background: #424137;
-      &:nth-child(even) {
-        background: #2d2c25;
-      }
-    }
-    thead tr {
-      background: #675432;
-    }
-    thead td {
-      width: 10%;
-    }
-    td {
-      padding: 0.5rem;
-    }
-  }
-}
 
 .gallery {
   display: flex;

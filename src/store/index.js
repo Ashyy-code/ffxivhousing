@@ -6,6 +6,7 @@ export default createStore({
             endpointDataLoaded:false,
             housingItemsData:null,
             housingItemsDataFiltered:null,
+            housingItemsSearch:null,
             housingItemTypes:[],
             selectedType:'Furnishing',
             selectedSubType:'All',
