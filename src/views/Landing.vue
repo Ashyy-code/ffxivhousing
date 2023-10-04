@@ -6,7 +6,7 @@
 
       <filterVue />
       
-      <div class="housing-items" v-if="this.$store.state.endpointDataLoaded">
+      <div ref="itemList" class="housing-items" v-if="this.$store.state.endpointDataLoaded">
       <div
         v-for="housingItem in this.$store.state.housingItemsDataFiltered"
         :key="housingItem.itemID"
@@ -19,6 +19,7 @@
             'https://en.ff14housing.com' +
             housingItem.itemImage1?.substring(1, 500)
           "
+          loading="lazy"
         />
         <img
           v-if="!housingItem.itemImage1 || housingItem.itemImage1.includes('.png')"
@@ -64,7 +65,11 @@ import typeSearcherVue from "../components/typeSearcher.vue";
 import filterVue from "../components/filter.vue";
 export default {
   components: { typeSearcherVue, filterVue },
-  
+  watch: {
+    "$store.state.selectedType": function () {
+      this.$refs.itemList.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+  },
 };
 </script>
 
