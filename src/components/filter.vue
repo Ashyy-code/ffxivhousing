@@ -1,7 +1,7 @@
 <template>
   <div class="filter-wrap">
     <div class="title">
-      {{ this.$store.state.selectedType.replace("/", "") }}
+      {{ this.$store.state.selectedType?.replace("/", "") }}
     </div>
     <div class="sub-items">
       <div

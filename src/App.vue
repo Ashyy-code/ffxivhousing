@@ -33,7 +33,7 @@ export default {
           });
 
           store.state.endpointDataLoaded = true;
-          console.log(response.data);
+          //console.log(response.data);
         });
     },
   },

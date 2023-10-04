@@ -64,7 +64,7 @@ export default {
     },
     checkPageRoute(){
         this.$router.push('/');
-        console.log('pushed')
+        //('pushed')
     },
     filterByType(type) {
       this.$store.state.housingItemsDataFiltered = [];
